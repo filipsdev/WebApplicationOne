@@ -170,6 +170,8 @@
     <Content Include="Views\Test\TestView.cshtml" />
     <Content Include="Views\Test\ErrorMessage.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\LoginSuccess.cshtml" />
+    <Content Include="Views\Login\LoginFailure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
