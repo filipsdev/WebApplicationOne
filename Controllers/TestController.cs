@@ -8,7 +8,7 @@ namespace WebApplicationOne.Controllers
 {
     public class TestController : Controller
     {
-        // GET: Test.
+        // GET: Test
         public ActionResult Index()
         {
             return View();
