@@ -80,5 +80,39 @@ namespace WebApplicationOne.Data
              return item;
             }
         }
+
+        // create new
+        public int Create(ItemModel itemModel)
+        {
+
+            // access the DB
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "INSERT INTO dbo.Items VALUES(@Name, @Type, @Size, @Price, @Description)";
+
+                // associate @Id with Id parameter
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Name;
+                command.Parameters.Add("@Type", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Type;
+                command.Parameters.Add("@Size", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Type;
+                command.Parameters.Add("@Price", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Price;
+                command.Parameters.Add("@Description", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Description;
+
+                connection.Open();
+
+                int newID = command.ExecuteNonQuery();
+
+                return newID;
+            }
+        }
+        // delete one
+
+        // update one
+
+        // search for name
+
+        // search for description
     }
 }

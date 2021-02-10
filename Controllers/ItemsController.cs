@@ -33,5 +33,22 @@ namespace WebApplicationOne.Controllers
 
             return View("Details", item);
         }
+
+        public ActionResult Create()
+        {
+            return View("ItemForm");
+        }
+
+        public ActionResult ProcessCreate(ItemModel itemModel)
+        {
+            // save to the DB
+            ItemDAO itemDAO = new ItemDAO();
+
+            itemDAO.Create(itemModel);
+
+            return View("Details", itemModel);
+        }
+
+
     }
 }
