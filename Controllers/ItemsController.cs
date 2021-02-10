@@ -25,5 +25,13 @@ namespace WebApplicationOne.Controllers
 
             return View("Index", items);
         }
+
+        public ActionResult Details(int id)
+        {
+            ItemDAO itemDAO = new ItemDAO();
+            ItemModel item = itemDAO.FetchOne(id);
+
+            return View("Details", item);
+        }
     }
 }

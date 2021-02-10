@@ -14,7 +14,7 @@ namespace WebApplicationOne.Data
             List<ItemModel> returnList = new List<ItemModel>();
 
             // access the DB
-            using(SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string sqlQuery = "SELECT * FROM dbo.Items";
 
@@ -42,6 +42,43 @@ namespace WebApplicationOne.Data
             }
 
             return returnList;
+        }
+        public ItemModel FetchOne(int Id)
+        {
+
+            // access the DB
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "SELECT * FROM dbo.Items WHERE Id = @id";
+
+                // associate @Id with Id parameter
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = Id;
+
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                ItemModel item = new ItemModel();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        // create a new item object. Add it to the list to return.
+                        item.Id = reader.GetInt32(0);
+                        item.Name = reader.GetString(1);
+                        item.Type = reader.GetString(2);
+                        item.Size = reader.GetString(3);
+                        item.Price = reader.GetString(4);
+                        item.Description = reader.GetString(5);
+
+                    }
+                }
+             return item;
+            }
         }
     }
 }
