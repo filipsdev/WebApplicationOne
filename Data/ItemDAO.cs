@@ -82,18 +82,32 @@ namespace WebApplicationOne.Data
         }
 
         // create new
-        public int Create(ItemModel itemModel)
+        public int CreateOrUpdate(ItemModel itemModel)
         {
+            // if itemModel.id <= 1 then create
+
+            // if itemModel.id > 1 then update is meant
 
             // access the DB
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "INSERT INTO dbo.Items VALUES(@Name, @Type, @Size, @Price, @Description)";
+                string sqlQuery = "";
+
+                if (itemModel.Id <= 0)
+                {
+                    sqlQuery = "INSERT INTO dbo.Items VALUES(@Name, @Type, @Size, @Price, @Description)";
+                }
+                else
+                {
+                    // update
+                    sqlQuery = "UPDATE dbo.Items SET Name = @Name, Type = @Type, Size = @Size, Price = @Price, Description = @Description WHERE Id = @Id";
+                }
 
                 // associate @Id with Id parameter
 
                 SqlCommand command = new SqlCommand(sqlQuery, connection);
 
+                command.Parameters.Add("@Id", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Id;
                 command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Name;
                 command.Parameters.Add("@Type", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Type;
                 command.Parameters.Add("@Size", System.Data.SqlDbType.VarChar, 1000).Value = itemModel.Type;

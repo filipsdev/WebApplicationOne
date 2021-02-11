@@ -38,13 +38,20 @@ namespace WebApplicationOne.Controllers
         {
             return View("ItemForm");
         }
+        public ActionResult Edit(int id)
+        {
+            ItemDAO itemDAO = new ItemDAO();
+            ItemModel item = itemDAO.FetchOne(id);
+
+            return View("ItemForm", item);
+        }
 
         public ActionResult ProcessCreate(ItemModel itemModel)
         {
             // save to the DB
             ItemDAO itemDAO = new ItemDAO();
 
-            itemDAO.Create(itemModel);
+            itemDAO.CreateOrUpdate(itemModel);
 
             return View("Details", itemModel);
         }
