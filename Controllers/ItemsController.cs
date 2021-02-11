@@ -45,6 +45,15 @@ namespace WebApplicationOne.Controllers
 
             return View("ItemForm", item);
         }
+        public ActionResult Delete(int id)
+        {
+            ItemDAO itemDAO = new ItemDAO();
+            itemDAO.Delete(id);
+
+            List<ItemModel> items = itemDAO.FetchAll();
+
+            return View("Index", items);
+        }
 
         public ActionResult ProcessCreate(ItemModel itemModel)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using WebApplicationOne.Models;
 
@@ -43,6 +44,27 @@ namespace WebApplicationOne.Data
 
             return returnList;
         }
+
+        internal int Delete(int id)
+        {
+            // access the DB
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "DELETE FROM dbo.Items WHERE Id = @Id";
+               
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@Id", System.Data.SqlDbType.VarChar, 1000).Value = id;
+
+                connection.Open();
+
+                int deletedID = command.ExecuteNonQuery();
+
+                return deletedID;
+            }
+        }
+
+
         public ItemModel FetchOne(int Id)
         {
 
