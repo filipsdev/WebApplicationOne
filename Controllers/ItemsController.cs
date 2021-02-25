@@ -65,6 +65,32 @@ namespace WebApplicationOne.Controllers
             return View("Details", itemModel);
         }
 
+        public ActionResult SearchForm()
+        {
+            return View("SearchForm");
+        }
+
+        public ActionResult SearchForName(string searchPhrase)
+        {
+            // get a list of search results from the DB.
+
+            ItemDAO itemDAO = new ItemDAO();
+
+            List<ItemModel> searchResults = itemDAO.SearchForName(searchPhrase);
+
+            return View("Index", searchResults);
+        }
+        public ActionResult SearchForDescription(string searchPhrase)
+        {
+            // get a list of search results from the DB.
+
+            ItemDAO itemDAO = new ItemDAO();
+
+            List<ItemModel> searchResults = itemDAO.SearchForName(searchPhrase);
+
+            return View("Index", searchResults);
+        }
+
 
     }
 }

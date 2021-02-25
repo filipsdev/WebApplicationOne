@@ -64,6 +64,42 @@ namespace WebApplicationOne.Data
             }
         }
 
+        internal List<ItemModel> SearchForName(string searchPhrase)
+        {
+            List<ItemModel> returnList = new List<ItemModel>();
+
+            // access the DB
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sqlQuery = "SELECT * FROM dbo.Items WHERE NAME LIKE @searchForMe";
+
+                SqlCommand command = new SqlCommand(sqlQuery, connection);
+
+                command.Parameters.Add("@searchForMe", System.Data.SqlDbType.VarChar, 1000).Value = "%" + searchPhrase + "%";
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        // create a new item object. Add it to the list to return.
+                        ItemModel item = new ItemModel();
+                        item.Id = reader.GetInt32(0);
+                        item.Name = reader.GetString(1);
+                        item.Type = reader.GetString(2);
+                        item.Size = reader.GetString(3);
+                        item.Price = reader.GetString(4);
+                        item.Description = reader.GetString(5);
+
+                        returnList.Add(item);
+                    }
+                }
+            }
+
+            return returnList;
+        }
 
         public ItemModel FetchOne(int Id)
         {
